@@ -22,7 +22,7 @@
 TARGET      = main
 
 # important directories used by assorted rules and other variables
-DIR_DXL    = /main/
+DIR_DXL    = /quad/main/
 DIR_OBJS   = .objects
 
 # compiler options

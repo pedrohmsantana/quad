@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
             return 0;
         }
     }
-   sleep(1);
+    sleep(1);
     do
     {
         dxl_comm_result = groupSyncWrite.txPacket();
@@ -179,11 +179,11 @@ int main(int argc, char *argv[])
         }
     }
     while(abs(atual[0]-anguloscor[0])>10||abs(atual[1]-anguloscor[1])>10||abs(atual[2]-anguloscor[2])>10||
-            abs(atual[3]-anguloscor[3])>10||abs(atual[4]-anguloscor[4])>10||abs(atual[5]-anguloscor[5])>10||
-            abs(atual[6]-anguloscor[6])>10||abs(atual[7]-anguloscor[7])>10||abs(atual[8]-anguloscor[8])>10||
-            abs(atual[9]-anguloscor[9])>10||abs(atual[10]-anguloscor[10])>10||abs(atual[11]-anguloscor[11])>10);
+        abs(atual[3]-anguloscor[3])>10||abs(atual[4]-anguloscor[4])>10||abs(atual[5]-anguloscor[5])>10||
+        abs(atual[6]-anguloscor[6])>10||abs(atual[7]-anguloscor[7])>10||abs(atual[8]-anguloscor[8])>10||
+        abs(atual[9]-anguloscor[9])>10||abs(atual[10]-anguloscor[10])>10||abs(atual[11]-anguloscor[11])>10);
 
-    cout<<"\nPosiçao inicial\n";
+        cout<<"\nPosiçao inicial\n";
     cout<<"aperte qualquer tecla para continuar\n";
     cmd.getch();
     //laço principal
@@ -215,55 +215,54 @@ int main(int argc, char *argv[])
         }
         while(dxl_comm_result != COMM_SUCCESS);
         cout<<contador<<endl;
-/*
-        if(contador%1000==0)
+
+        
+        n=0;
+        spot=0;
+        buf='\0';
+        n_endl=0;
+        memset(response, '\0', sizeof response);
+
+        do
         {
-            n=0;
-            spot=0;
-            buf='\0';
-            n_endl=0;
-            memset(response, '\0', sizeof response);
-
-            do
-            {
-                n = read( USB, &buf, 1 );
-            }
-            while( buf != '<' && n > 0);
-            do
-            {
-                n = read( USB, &buf, 1 );
-                sprintf(&response[spot],"%c",buf);
-                spot += n;
-            }
-            while( buf != '>' && n > 0);
-            temp=response;
-            inic=temp.find('\n');
-            fim=inic;
-            while(fim!=string::npos)
-            {
-                fim=temp.find('\n',inic+1);
-                temp2=temp.substr(inic+1,fim-inic-1);
-                inic=fim;
-                if(n_endl<7)
-                {
-                    temp_val[n_endl]=atof(temp2.c_str());
-                }
-                n_endl++;
-            }
-
-            if(n_endl==8)
-            {
-                xAccel.push_back(temp_val[0]);
-                yAccel.push_back(temp_val[1]);
-                zAccel.push_back(temp_val[2]);
-                S1.push_back(temp_val[3]);
-                S2.push_back(temp_val[4]);
-                S3.push_back(temp_val[5]);
-                S4.push_back(temp_val[6]);
-                cout<<xAccel[contador/100]<<" "<<yAccel[contador/100]<<" "<<zAccel[contador/100]<<" "<<S1[contador/100]<<" "<<S2[contador/100]<<" "<<S3[contador/100]<<" "<<S4[contador/100]<<endl;
-            }
+            n = read( USB, &buf, 1 );
         }
-*/
+        while( buf != '<' && n > 0);
+        do
+        {
+            n = read( USB, &buf, 1 );
+            sprintf(&response[spot],"%c",buf);
+            spot += n;
+        }
+        while( buf != '>' && n > 0);
+        temp=response;
+        inic=temp.find('\n');
+        fim=inic;
+        while(fim!=string::npos)
+        {
+            fim=temp.find('\n',inic+1);
+            temp2=temp.substr(inic+1,fim-inic-1);
+            inic=fim;
+            if(n_endl<7)
+            {
+                temp_val[n_endl]=atof(temp2.c_str());
+            }
+            n_endl++;
+        }
+
+        if(n_endl==8)
+        {
+            xAccel.push_back(temp_val[0]);
+            yAccel.push_back(temp_val[1]);
+            zAccel.push_back(temp_val[2]);
+            S1.push_back(temp_val[3]);
+            S2.push_back(temp_val[4]);
+            S3.push_back(temp_val[5]);
+            S4.push_back(temp_val[6]);
+            cout<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<endl;
+        }
+        
+
         contador++;
         // Clear syncwrite parameter storage
         groupSyncWrite.clearParam();
@@ -275,9 +274,9 @@ int main(int argc, char *argv[])
             }
         }
         while(abs(atual[0]-anguloscor[0])>10||abs(atual[1]-anguloscor[1])>10||abs(atual[2]-anguloscor[2])>10||
-                abs(atual[3]-anguloscor[3])>10||abs(atual[4]-anguloscor[4])>10||abs(atual[5]-anguloscor[5])>10||
-                abs(atual[6]-anguloscor[6])>10||abs(atual[7]-anguloscor[7])>10||abs(atual[8]-anguloscor[8])>10||
-                abs(atual[9]-anguloscor[9])>10||abs(atual[10]-anguloscor[10])>10||abs(atual[11]-anguloscor[11])>10);
+            abs(atual[3]-anguloscor[3])>10||abs(atual[4]-anguloscor[4])>10||abs(atual[5]-anguloscor[5])>10||
+            abs(atual[6]-anguloscor[6])>10||abs(atual[7]-anguloscor[7])>10||abs(atual[8]-anguloscor[8])>10||
+            abs(atual[9]-anguloscor[9])>10||abs(atual[10]-anguloscor[10])>10||abs(atual[11]-anguloscor[11])>10);
         //cmd.DelayMicrosecondsNoSleep(TASK_PERIOD);
 
         /*
@@ -292,9 +291,9 @@ int main(int argc, char *argv[])
         }
         */
     }
-    arq.close();
-    cmd.write_torque(portHandler, packetHandler, BROADCASTID, (uint8_t) 0);
+arq.close();
+cmd.write_torque(portHandler, packetHandler, BROADCASTID, (uint8_t) 0);
     // Close port
-    portHandler->closePort();
-    return 0;
+portHandler->closePort();
+return 0;
 }

@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
     command cmd;
     ifstream arq("angmaior.txt");
     fstream arq2("calibra.txt");
+    ofstream arq3("valores_sensores.txt");
     dynamixel::PacketHandler *packetHandler = dynamixel::PacketHandler::getPacketHandler(1);
     dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler(dev_name);
     dynamixel::GroupSyncWrite groupSyncWrite(portHandler, packetHandler, 30, 2);
@@ -261,6 +262,7 @@ int main(int argc, char *argv[])
             S3.push_back(temp_val[5]);
             S4.push_back(temp_val[6]);
             cout<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<endl;
+            arq3<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<endl;
         }
         
 
@@ -293,6 +295,8 @@ int main(int argc, char *argv[])
         */
     }
 arq.close();
+arq2.close();
+arq3.close();
 cmd.write_torque(portHandler, packetHandler, BROADCASTID, (uint8_t) 0);
     // Close port
 portHandler->closePort();

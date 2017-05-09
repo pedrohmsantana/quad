@@ -214,9 +214,10 @@ int main(int argc, char *argv[])
             //if (dxl_comm_result != COMM_SUCCESS) packetHandler->printTxRxResult(dxl_comm_result);
         }
         while(dxl_comm_result != COMM_SUCCESS);
-        cout<<contador<<endl;
+        //cout<<contador<<endl;
 
         
+        tcflush( USB, TCIFLUSH );
         n=0;
         spot=0;
         buf='\0';
@@ -295,5 +296,6 @@ arq.close();
 cmd.write_torque(portHandler, packetHandler, BROADCASTID, (uint8_t) 0);
     // Close port
 portHandler->closePort();
+close(USB);
 return 0;
 }

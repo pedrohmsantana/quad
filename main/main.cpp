@@ -111,6 +111,7 @@ int main(int argc, char *argv[])
     }
 
     cmd.write_torque(portHandler, packetHandler, BROADCASTID, 0);
+    cmd.config_ram(portHandler, packetHandler);
     //Calibraçao
     printf("======================Calibracao================================\n==========Mantenha todas a patas na posicao central ==========\n");
     printf("deseja iniciar a calibracao?? 1 para sim \n");

@@ -145,6 +145,18 @@ void command::calibra(dynamixel::PortHandler *portHandler, dynamixel::PacketHand
     }
 }
 
+void command::config_ram(dynamixel::PortHandler *portHandler, dynamixel::PacketHandler *packetHandler)
+{
+	int dxl_comm_result = COMM_TX_FAIL;
+    uint8_t dxl_error = 0;
+
+    dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, 254, 26, (uint8_t)0, &dxl_error);
+    dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, 254, 27, (uint8_t)0, &dxl_error);
+    dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, 254, 28, (uint8_t)8, &dxl_error);
+    dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, 254, 29, (uint8_t)8, &dxl_error);
+    dxl_comm_result = packetHandler->write2ByteTxRx(portHandler, 254, 48, (uint16_t)0, &dxl_error);
+}
+
 int command::getch()
 {
     struct termios oldt, newt;

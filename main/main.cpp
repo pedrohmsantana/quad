@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     //struct timespec tim, tim2;
     //tim.tv_sec = 0;
     //tim.tv_nsec = TASK_PERIOD;
-    int USB = open( "/dev/ttyACM0", O_RDWR| O_NOCTTY );
+    int USB = open( "/dev/ttyACM1", O_RDWR| O_NOCTTY );
     int n = 0, n_endl, spot = 0, valor=0;
     float temp_val[7];
     size_t inic, fim;

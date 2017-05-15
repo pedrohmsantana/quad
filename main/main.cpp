@@ -35,6 +35,7 @@ int main(int argc, char *argv[])
     int anguloscor[12];
     int X;
     int contador=0;
+    int n_written = 0;
     //struct timespec tim, tim2;
     //tim.tv_sec = 0;
     //tim.tv_nsec = TASK_PERIOD;
@@ -80,7 +81,7 @@ int main(int argc, char *argv[])
     /* Make raw */
     cfmakeraw(&tty);
     /* Flush Port, then applies attributes */
-    tcflush( USB, TCIFLUSH );
+    //tcflush( USB, TCIFLUSH );
     if ( tcsetattr ( USB, TCSANOW, &tty ) != 0)
     {
         std::cout << "Error " << errno << " from tcsetattr" << std::endl;
@@ -219,12 +220,13 @@ int main(int argc, char *argv[])
         //cout<<contador<<endl;
 
         
-        tcflush( USB, TCIFLUSH );
+        //tcflush( USB, TCIFLUSH );
         n=0;
         spot=0;
         buf='\0';
         n_endl=0;
         memset(response, '\0', sizeof response);
+        n_written = write( USB, "1", 1 );
 
         do
         {

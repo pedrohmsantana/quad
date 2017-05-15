@@ -276,7 +276,7 @@ int main(int argc, char *argv[])
         S3.push_back(temp_val[5]/5);
         S4.push_back(temp_val[6]/5);
         roll.push_back(atan(-xAccel[contador]/zAccel[contador])*180/PI);
-        pitch.push_back(atan(yAccel/(sqrt(xAccel[contador]*xAccel[contador]+zAccel[contador]*zAccel[contador]))));
+        pitch.push_back(atan(yAccel[contador]/(sqrt(xAccel[contador]*xAccel[contador]+zAccel[contador]*zAccel[contador]))));
         cout<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
         arq3<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
         contador++;

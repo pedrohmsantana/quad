@@ -228,7 +228,7 @@ int main(int argc, char *argv[])
             abs(atual[6]-anguloscor[6])>10||abs(atual[7]-anguloscor[7])>10||abs(atual[8]-anguloscor[8])>10||
             abs(atual[9]-anguloscor[9])>10||abs(atual[10]-anguloscor[10])>10||abs(atual[11]-anguloscor[11])>10);
             memset(temp_val, 0, sizeof temp_val);
-        for(j=0;j<5;j++){
+        for(j=0;j<10;j++){
             n=0;
             spot=0;
             buf='\0';
@@ -265,13 +265,13 @@ int main(int argc, char *argv[])
             }
 
         }
-        xAccel.push_back(temp_val[0]/4);
-        yAccel.push_back(temp_val[1]/4);
-        zAccel.push_back(temp_val[2]/4);
-        S1.push_back(temp_val[3]/4);
-        S2.push_back(temp_val[4]/4);
-        S3.push_back(temp_val[5]/4);
-        S4.push_back(temp_val[6]/4);
+        xAccel.push_back(temp_val[0]/10);
+        yAccel.push_back(temp_val[1]/10);
+        zAccel.push_back(temp_val[2]/10);
+        S1.push_back(temp_val[3]/10);
+        S2.push_back(temp_val[4]/10);
+        S3.push_back(temp_val[5]/10);
+        S4.push_back(temp_val[6]/10);
         cout<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<endl;
         arq3<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<endl;
         contador++;

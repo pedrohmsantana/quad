@@ -221,55 +221,7 @@ int main(int argc, char *argv[])
 
         
         //tcflush( USB, TCIFLUSH );
-        n=0;
-        spot=0;
-        buf='\0';
-        n_endl=0;
-        memset(response, '\0', sizeof response);
-        n_written = write( USB, "1", 1 );
 
-        do
-        {
-            n = read( USB, &buf, 1 );
-        }
-        while( buf != '<' && n > 0);
-        do
-        {
-            n = read( USB, &buf, 1 );
-            sprintf(&response[spot],"%c",buf);
-            spot += n;
-        }
-        while( buf != '>' && n > 0);
-        temp=response;
-        inic=temp.find('\n');
-        fim=inic;
-        while(fim!=string::npos)
-        {
-            fim=temp.find('\n',inic+1);
-            temp2=temp.substr(inic+1,fim-inic-1);
-            inic=fim;
-            if(n_endl<7)
-            {
-                temp_val[n_endl]=atof(temp2.c_str());
-            }
-            n_endl++;
-        }
-
-        if(n_endl==8)
-        {
-            xAccel.push_back(temp_val[0]);
-            yAccel.push_back(temp_val[1]);
-            zAccel.push_back(temp_val[2]);
-            S1.push_back(temp_val[3]);
-            S2.push_back(temp_val[4]);
-            S3.push_back(temp_val[5]);
-            S4.push_back(temp_val[6]);
-            cout<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<endl;
-            arq3<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<endl;
-        }
-        
-
-        contador++;
         // Clear syncwrite parameter storage
         groupSyncWrite.clearParam();
         do
@@ -283,6 +235,56 @@ int main(int argc, char *argv[])
             abs(atual[3]-anguloscor[3])>10||abs(atual[4]-anguloscor[4])>10||abs(atual[5]-anguloscor[5])>10||
             abs(atual[6]-anguloscor[6])>10||abs(atual[7]-anguloscor[7])>10||abs(atual[8]-anguloscor[8])>10||
             abs(atual[9]-anguloscor[9])>10||abs(atual[10]-anguloscor[10])>10||abs(atual[11]-anguloscor[11])>10);
+
+            for(j=0;j<5;j++){
+                n=0;
+                spot=0;
+                buf='\0';
+                n_endl=0;
+                memset(response, '\0', sizeof response);
+                n_written = write( USB, "1", 1 );
+
+                do
+                {
+                    n = read( USB, &buf, 1 );
+                }
+                while( buf != '<' && n > 0);
+                do
+                {
+                    n = read( USB, &buf, 1 );
+                    sprintf(&response[spot],"%c",buf);
+                    spot += n;
+                }
+                while( buf != '>' && n > 0);
+                temp=response;
+                inic=temp.find('\n');
+                fim=inic;
+                while(fim!=string::npos)
+                {
+                    fim=temp.find('\n',inic+1);
+                    temp2=temp.substr(inic+1,fim-inic-1);
+                    inic=fim;
+                    if(n_endl<7)
+                    {
+                        temp_val[n_endl]=atof(temp2.c_str());
+                    }
+                    n_endl++;
+                }
+
+                if(n_endl==8)
+                {
+                    xAccel.push_back(temp_val[0]);
+                    yAccel.push_back(temp_val[1]);
+                    zAccel.push_back(temp_val[2]);
+                    S1.push_back(temp_val[3]);
+                    S2.push_back(temp_val[4]);
+                    S3.push_back(temp_val[5]);
+                    S4.push_back(temp_val[6]);
+                    cout<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<endl;
+                    arq3<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<endl;
+                }
+                contador++;
+            }
         //cmd.DelayMicrosecondsNoSleep(TASK_PERIOD);
 
         /*
@@ -296,12 +298,12 @@ int main(int argc, char *argv[])
             printf("falha na amostragem\n");
         }
         */
-    }
-arq.close();
-arq3.close();
-cmd.write_torque(portHandler, packetHandler, BROADCASTID, (uint8_t) 0);
+        }
+        arq.close();
+        arq3.close();
+        cmd.write_torque(portHandler, packetHandler, BROADCASTID, (uint8_t) 0);
     // Close port
-portHandler->closePort();
-close(USB);
-return 0;
-}
+        portHandler->closePort();
+        close(USB);
+        return 0;
+    }

@@ -88,17 +88,6 @@ int main(int argc, char *argv[])
     {
         std::cout << "Error " << errno << " from tcsetattr" << std::endl;
     }
-    n_written = write( USB, "1", 1 );
-    do
-    {
-        n = read( USB, &buf, 1 );
-    }
-    while( buf != '<' && n > 0);
-    do
-    {
-        n = read( USB, &buf, 1 );
-    }
-    while( buf != '>' && n > 0);
 
     if (portHandler->openPort())
     {

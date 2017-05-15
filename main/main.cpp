@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     //struct timespec tim, tim2;
     //tim.tv_sec = 0;
     //tim.tv_nsec = TASK_PERIOD;
-    int USB = open( "/dev/ttyACM1", O_RDWR| O_NOCTTY );
+    int USB = open( "/dev/ttyACM0", O_RDWR| O_NOCTTY );
     int n = 0, n_endl, spot = 0, valor=0;
     float temp_val[7];
     size_t inic, fim;
@@ -86,6 +86,7 @@ int main(int argc, char *argv[])
     {
         std::cout << "Error " << errno << " from tcsetattr" << std::endl;
     }
+    n_written = write( USB, "1", 1 );
     do
     {
         n = read( USB, &buf, 1 );
@@ -165,7 +166,7 @@ int main(int argc, char *argv[])
             return 0;
         }
     }
-    sleep(1);
+    //sleep(1);
     do
     {
         dxl_comm_result = groupSyncWrite.txPacket();

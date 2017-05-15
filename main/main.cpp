@@ -227,7 +227,7 @@ int main(int argc, char *argv[])
             abs(atual[3]-anguloscor[3])>10||abs(atual[4]-anguloscor[4])>10||abs(atual[5]-anguloscor[5])>10||
             abs(atual[6]-anguloscor[6])>10||abs(atual[7]-anguloscor[7])>10||abs(atual[8]-anguloscor[8])>10||
             abs(atual[9]-anguloscor[9])>10||abs(atual[10]-anguloscor[10])>10||abs(atual[11]-anguloscor[11])>10);
-            memset(temp_val, 0, sizeof response);
+            memset(temp_val, 0, sizeof temp_val);
         for(j=0;j<5;j++){
             n=0;
             spot=0;

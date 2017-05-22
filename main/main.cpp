@@ -287,10 +287,10 @@ int main(int argc, char *argv[])
         if (abs(roll[contador]-lido[0]*0.29)>1)
         {
             h=11*tan((roll[contador]-lido[0]*0.29)*PI/180);
-            if ((cos(lido[1]*0.29*PI/180)+h/10)>20||(cos(lido[1]*0.29*PI/180)+h/10)<10||
-                (cos(lido[4]*0.29*PI/180)-h/10)>20||(cos(lido[4]*0.29*PI/180)-h/10)<10||
-                (cos(lido[7]*0.29*PI/180)-h/10)>20||(cos(lido[7]*0.29*PI/180)-h/10)<10||
-                (cos(lido[10]*0.29*PI/180)+h/10)>20||(cos(lido[10]*0.29*PI/180)+h/10)<10)
+            if ((cos(lido[1]*0.29*PI/180)+h/10)>1||(cos(lido[1]*0.29*PI/180)+h/10)<-1||
+                (cos(lido[4]*0.29*PI/180)-h/10)>1||(cos(lido[4]*0.29*PI/180)-h/10)<-1||
+                (cos(lido[7]*0.29*PI/180)-h/10)>1||(cos(lido[7]*0.29*PI/180)-h/10)<-1||
+                (cos(lido[10]*0.29*PI/180)+h/10)>1||(cos(lido[10]*0.29*PI/180)+h/10)<-1)
             {
                 cout<<"EMERGENCIA\n";
             }

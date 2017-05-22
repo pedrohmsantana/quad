@@ -18,37 +18,46 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    char *dev_name = (char*)DEVICENAME;
     command cmd;
+
     ifstream arq("angmaior.txt");
     fstream arq2("calibra.txt");
     ofstream arq3("valores_sensores.txt");
+
+    char *dev_name = (char*)DEVICENAME;
+    char buf = '\0';
+    char response[1024];
+    
+    
     dynamixel::PacketHandler *packetHandler = dynamixel::PacketHandler::getPacketHandler(1);
     dynamixel::PortHandler *portHandler = dynamixel::PortHandler::getPortHandler(dev_name);
     dynamixel::GroupSyncWrite groupSyncWrite(portHandler, packetHandler, 30, 2);
+
     uint8_t param_goal_position[2];
-    bool dxl_addparam_result = false;                // addParam result
-    int dxl_comm_result = COMM_TX_FAIL;             // Communication result
     uint8_t j=1;
+
+    bool dxl_addparam_result = false;                // addParam result
+
+    int dxl_comm_result = COMM_TX_FAIL;             // Communication result
     int vetor_centro[12];
     int lido[12] = {0,0,0,0,0,0,0,0,0,0,0,0};           //buffer leitura
     int atual[12];
     int anguloscor[12];
+    int cor_fat[12]={0,0,0,0,0,0,0,0,0,0,0,0}
     int X;
     int contador=0;
     int n_written = 0;
-    //struct timespec tim, tim2;
-    //tim.tv_sec = 0;
-    //tim.tv_nsec = TASK_PERIOD;
+    int n = 0, n_endl, spot = 0, valor=0;
     int USB = open( "/dev/ttyACM0", O_RDWR| O_NOCTTY );
     close(USB);
     USB = open( "/dev/ttyACM0", O_RDWR| O_NOCTTY );
-    int n = 0, n_endl, spot = 0, valor=0;
+    
     float temp_val[7];
+
     size_t inic, fim;
-    char buf = '\0';
-    char response[1024];
+    
     string temp,temp2;
+
     vector<float> xAccel;
     vector<float> yAccel;
     vector<float> zAccel;
@@ -150,7 +159,7 @@ int main(int argc, char *argv[])
     cmd.write_torque(portHandler,packetHandler,BROADCASTID,1);
     for(j=1; j<13; j++)
     {
-        anguloscor[j-1]=lido[j-1]+vetor_centro[j-1];
+        anguloscor[j-1]=lido[j-1]+vetor_centro[j-1]+cor_fat[j-1];
         param_goal_position[0] = DXL_LOBYTE(anguloscor[j-1]);
         param_goal_position[1] = DXL_HIBYTE(anguloscor[j-1]);
         dxl_addparam_result = groupSyncWrite.addParam(j, param_goal_position);
@@ -160,13 +169,12 @@ int main(int argc, char *argv[])
             return 0;
         }
     }
-    //sleep(1);
+
     do
     {
         dxl_comm_result = groupSyncWrite.txPacket();
-        //if (dxl_comm_result != COMM_SUCCESS) packetHandler->printTxRxResult(dxl_comm_result);
-    }
-    while(dxl_comm_result != COMM_SUCCESS);
+    }while(dxl_comm_result != COMM_SUCCESS);
+
     // Clear syncwrite parameter storage
     groupSyncWrite.clearParam();
     do
@@ -175,15 +183,15 @@ int main(int argc, char *argv[])
         {
             atual[j-1]=cmd.read_pos(portHandler,packetHandler,j);
         }
-    }
-    while(abs(atual[0]-anguloscor[0])>10||abs(atual[1]-anguloscor[1])>10||abs(atual[2]-anguloscor[2])>10||
+    }while(abs(atual[0]-anguloscor[0])>10||abs(atual[1]-anguloscor[1])>10||abs(atual[2]-anguloscor[2])>10||
         abs(atual[3]-anguloscor[3])>10||abs(atual[4]-anguloscor[4])>10||abs(atual[5]-anguloscor[5])>10||
         abs(atual[6]-anguloscor[6])>10||abs(atual[7]-anguloscor[7])>10||abs(atual[8]-anguloscor[8])>10||
         abs(atual[9]-anguloscor[9])>10||abs(atual[10]-anguloscor[10])>10||abs(atual[11]-anguloscor[11])>10);
 
-        cout<<"\nPosiçao inicial\n";
+    cout<<"\nPosiçao inicial\n";
     cout<<"aperte qualquer tecla para continuar\n";
     cmd.getch();
+
     //laço principal
     while(!arq.eof())
     {
@@ -193,7 +201,7 @@ int main(int argc, char *argv[])
         arq>>lido[9]>>lido[10]>>lido[11];
         for(j=1; j<13; j++)
         {
-            anguloscor[j-1]=lido[j-1]+vetor_centro[j-1];
+            anguloscor[j-1]=lido[j-1]+vetor_centro[j-1]+cor_fat[j-1];
             cmd.write_torque(portHandler,packetHandler,j,1);
             param_goal_position[0] = DXL_LOBYTE(anguloscor[j-1]);
             param_goal_position[1] = DXL_HIBYTE(anguloscor[j-1]);
@@ -204,19 +212,14 @@ int main(int argc, char *argv[])
                 return 0;
             }
         }
-      // sleep(2);
 
         do
         {
             dxl_comm_result = groupSyncWrite.txPacket();
             //if (dxl_comm_result != COMM_SUCCESS) packetHandler->printTxRxResult(dxl_comm_result);
-        }
-        while(dxl_comm_result != COMM_SUCCESS);
-        //cout<<contador<<endl;
+        }while(dxl_comm_result != COMM_SUCCESS);
 
-        
         //tcflush( USB, TCIFLUSH );
-
         // Clear syncwrite parameter storage
         groupSyncWrite.clearParam();
         do
@@ -225,12 +228,12 @@ int main(int argc, char *argv[])
             {
                 atual[j-1]=cmd.read_pos(portHandler,packetHandler,j);
             }
-        }
-        while(abs(atual[0]-anguloscor[0])>10||abs(atual[1]-anguloscor[1])>10||abs(atual[2]-anguloscor[2])>10||
+        }while(abs(atual[0]-anguloscor[0])>10||abs(atual[1]-anguloscor[1])>10||abs(atual[2]-anguloscor[2])>10||
             abs(atual[3]-anguloscor[3])>10||abs(atual[4]-anguloscor[4])>10||abs(atual[5]-anguloscor[5])>10||
             abs(atual[6]-anguloscor[6])>10||abs(atual[7]-anguloscor[7])>10||abs(atual[8]-anguloscor[8])>10||
             abs(atual[9]-anguloscor[9])>10||abs(atual[10]-anguloscor[10])>10||abs(atual[11]-anguloscor[11])>10);
-            memset(temp_val, 0, sizeof temp_val);
+
+        memset(temp_val, 0, sizeof temp_val);
         for(j=0;j<5;j++){
             n=0;
             spot=0;
@@ -268,8 +271,8 @@ int main(int argc, char *argv[])
             }
 
         }
-        xAccel.push_back(temp_val[0]/5);
-        yAccel.push_back(temp_val[1]/5);
+        xAccel.push_back(temp_val[1]/5);
+        yAccel.push_back(temp_val[0]/5);
         zAccel.push_back(temp_val[2]/5);
         S1.push_back(temp_val[3]/5);
         S2.push_back(temp_val[4]/5);
@@ -279,20 +282,17 @@ int main(int argc, char *argv[])
         pitch.push_back(atan(yAccel[contador]/(sqrt(xAccel[contador]*xAccel[contador]+zAccel[contador]*zAccel[contador])))*180/PI);
         cout<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
         arq3<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
+        
+        if (abs(roll[contador])>1)
+        {
+            /* code */
+        }
+        if (abs(pitch[contador])>1)
+        {
+            /* code */
+        }
+
         contador++;
-        //cmd.DelayMicrosecondsNoSleep(TASK_PERIOD);
-
-        /*
-        if(nanosleep(&tim , &tim2) < 0 )
-        {
-            printf("...\n");
-
-        }
-        else
-        {
-            printf("falha na amostragem\n");
-        }
-        */
     }
     arq.close();
     arq3.close();

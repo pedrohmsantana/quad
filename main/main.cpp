@@ -292,7 +292,7 @@ int main(int argc, char *argv[])
                 (cos(lido[7]*0.29*PI/180)-h/10)>1||(cos(lido[7]*0.29*PI/180)-h/10)<-1||
                 (cos(lido[10]*0.29*PI/180)+h/10)>1||(cos(lido[10]*0.29*PI/180)+h/10)<-1)
             {
-                cor_fat={0,0,0,0,0,0,0,0,0,0,0,0};
+                memset(cor_fat, 0, sizeof cor_fat);
                 cout<<"EMERGENCIA\n";
             }
             else{

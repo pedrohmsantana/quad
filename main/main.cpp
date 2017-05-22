@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     int lido[12] = {0,0,0,0,0,0,0,0,0,0,0,0};           //buffer leitura
     int atual[12];
     int anguloscor[12];
-    int cor_fat[12]={0,0,0,0,0,0,0,0,0,0,0,0}
+    int cor_fat[12]={0,0,0,0,0,0,0,0,0,0,0,0};
     int X;
     int contador=0;
     int n_written = 0;

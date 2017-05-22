@@ -287,14 +287,23 @@ int main(int argc, char *argv[])
         if (abs(roll[contador]-lido[0]*0.29)>1)
         {
             h=11*tan((roll[contador]-lido[0]*0.29)*PI/180);
-            cor_fat[1]=cor_fat[1]+lido[1]/abs(lido[1])*(acos(cos(lido[1]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[1]));
-            cor_fat[2]=-cor_fat[1];
-            cor_fat[4]=cor_fat[4]+lido[4]/abs(lido[4])*(acos(cos(lido[4]*0.29*PI/180)-h/10)*180/(PI*0.29)-abs(lido[4]));
-            cor_fat[5]=-cor_fat[4];
-            cor_fat[7]=cor_fat[7]+lido[7]/abs(lido[7])*(acos(cos(lido[7]*0.29*PI/180)-h/10)*180/(PI*0.29)-abs(lido[7]));
-            cor_fat[8]=-cor_fat[7];
-            cor_fat[10]=cor_fat[10]+lido[10]/abs(lido[10])*(acos(cos(lido[10]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[10]));
-            cor_fat[11]=-cor_fat[10];   
+            if ((cos(lido[1]*0.29*PI/180)+h/10)>20||(cos(lido[1]*0.29*PI/180)+h/10)<10||
+                (cos(lido[4]*0.29*PI/180)-h/10)>20||(cos(lido[4]*0.29*PI/180)-h/10)<10||
+                (cos(lido[7]*0.29*PI/180)-h/10)>20||(cos(lido[7]*0.29*PI/180)-h/10)<10||
+                (cos(lido[10]*0.29*PI/180)+h/10)>20||(cos(lido[10]*0.29*PI/180)+h/10)<10)
+            {
+                cout>>"EMERGENCIA\n";
+            }
+            else{
+                cor_fat[1]=cor_fat[1]+lido[1]/abs(lido[1])*(acos(cos(lido[1]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[1]));
+                cor_fat[2]=-cor_fat[1];
+                cor_fat[4]=cor_fat[4]+lido[4]/abs(lido[4])*(acos(cos(lido[4]*0.29*PI/180)-h/10)*180/(PI*0.29)-abs(lido[4]));
+                cor_fat[5]=-cor_fat[4];
+                cor_fat[7]=cor_fat[7]+lido[7]/abs(lido[7])*(acos(cos(lido[7]*0.29*PI/180)-h/10)*180/(PI*0.29)-abs(lido[7]));
+                cor_fat[8]=-cor_fat[7];
+                cor_fat[10]=cor_fat[10]+lido[10]/abs(lido[10])*(acos(cos(lido[10]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[10]));
+                cor_fat[11]=-cor_fat[10];
+            }   
             /* code */
         }
         if (abs(pitch[contador])>1)

@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     int X;
     int contador=0;
     int n_written = 0;
-    int n = 0, n_endl, spot = 0, valor=0;
+    int n = 0, n_endl, spot = 0;
     int USB = open( "/dev/ttyACM0", O_RDWR| O_NOCTTY );
     close(USB);
     USB = open( "/dev/ttyACM0", O_RDWR| O_NOCTTY );
@@ -272,7 +272,7 @@ int main(int argc, char *argv[])
 
         }
         xAccel.push_back(temp_val[1]/5);
-        yAccel.push_back(temp_val[0]/5);
+        yAccel.push_back(-temp_val[0]/5);
         zAccel.push_back(temp_val[2]/5);
         S1.push_back(temp_val[3]/5);
         S2.push_back(temp_val[4]/5);

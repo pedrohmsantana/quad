@@ -299,7 +299,7 @@ int main(int argc, char *argv[])
         }
         if (abs(pitch[contador])>1)
         {
-            h=13.5*tan(roll[contador]*PI/180);
+            h=13.5*tan(pitch[contador]*PI/180);
             cor_fat[1]=cor_fat[1]+lido[1]/abs(lido[1])*(acos(cos(lido[1]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[1]));
             cor_fat[2]=-cor_fat[1];
             cor_fat[4]=cor_fat[4]+lido[4]/abs(lido[4])*(acos(cos(lido[4]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[4]));

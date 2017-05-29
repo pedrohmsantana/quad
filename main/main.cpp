@@ -348,7 +348,7 @@ int main(int argc, char *argv[])
             }
             /* code */
         }
-        cout<<emer[0]<<" "emer[1]<<endl;
+        cout<<emer[0]<<" "<<emer[1]<<endl;
         //cout<<"[ "<<cor_fat[0]<<" "<<cor_fat[1]<<" "<<cor_fat[2]<<" "<<cor_fat[3]<<" "<<cor_fat[4]<<" "<<cor_fat[5];
         //cout<<" "<<cor_fat[6]<<" "<<cor_fat[7]<<" "<<cor_fat[8]<<" "<<cor_fat[9]<<" "<<cor_fat[10]<<" "<<cor_fat[11]<<" ]\n";
 

@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     int X;
     int contador=0;
     int n_written = 0;
-    int n = 0, n_endl, spot = 0;
+    int n = 0, n_endl, spot = 0, emer[2]={0,0};
     int USB = open( "/dev/ttyACM0", O_RDWR| O_NOCTTY );
     close(USB);
     USB = open( "/dev/ttyACM0", O_RDWR| O_NOCTTY );

@@ -287,10 +287,10 @@ int main(int argc, char *argv[])
         if (abs(roll[contador])>1)
         {
             h=11*tan((roll[contador])*PI/180);
-            if ((cos(lido[1]*0.29*PI/180)+h/10)>1||(cos(lido[1]*0.29*PI/180)+h/10)<-1||
-                (cos(lido[4]*0.29*PI/180)-h/10)>1||(cos(lido[4]*0.29*PI/180)-h/10)<-1||
-                (cos(lido[7]*0.29*PI/180)-h/10)>1||(cos(lido[7]*0.29*PI/180)-h/10)<-1||
-                (cos(lido[10]*0.29*PI/180)+h/10)>1||(cos(lido[10]*0.29*PI/180)+h/10)<-1)
+            if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
+                (abs(cos(lido[4]*0.29*PI/180)-h/10))>1||
+                (abs(cos(lido[7]*0.29*PI/180)-h/10))>1||
+                (abs(cos(lido[10]*0.29*PI/180)+h/10))>1)
             {
                 memset(cor_fat, 0, sizeof cor_fat);
                 cout<<"EMERGENCIA roll\n";
@@ -310,10 +310,10 @@ int main(int argc, char *argv[])
         if (abs(pitch[contador])>1)
         {
             h=13.5*tan((pitch[contador])*PI/180);
-            if ((cos(lido[1]*0.29*PI/180)+h/10)>1||(cos(lido[1]*0.29*PI/180)+h/10)<-1||
-                (cos(lido[4]*0.29*PI/180)+h/10)>1||(cos(lido[4]*0.29*PI/180)+h/10)<-1||
-                (cos(lido[7]*0.29*PI/180)-h/10)>1||(cos(lido[7]*0.29*PI/180)-h/10)<-1||
-                (cos(lido[10]*0.29*PI/180)-h/10)>1||(cos(lido[10]*0.29*PI/180)-h/10)<-1)
+            if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
+                (abs(cos(lido[4]*0.29*PI/180)+h/10))>1||
+                (abs(cos(lido[7]*0.29*PI/180)-h/10))>1||
+                (abs(cos(lido[10]*0.29*PI/180)-h/10))>1)
             {
                 memset(cor_fat, 0, sizeof cor_fat);
                 cout<<"EMERGENCIA pitch\n";

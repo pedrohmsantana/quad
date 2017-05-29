@@ -293,7 +293,7 @@ int main(int argc, char *argv[])
                 (abs(cos(lido[10]*0.29*PI/180)+h/10))>1)
             {
                 memset(cor_fat, 0, sizeof cor_fat);
-                //cout<<"EMERGENCIA roll\n";
+                cout<<"EMERGENCIA roll\n";
                 if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
                     (abs(cos(lido[10]*0.29*PI/180)+h/10))>1)
                 {
@@ -323,7 +323,7 @@ int main(int argc, char *argv[])
                 (abs(cos(lido[10]*0.29*PI/180)-h/10))>1)
             {
                 memset(cor_fat, 0, sizeof cor_fat);
-                //cout<<"EMERGENCIA pitch\n";
+                cout<<"EMERGENCIA pitch\n";
                 if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
                     (abs(cos(lido[4]*0.29*PI/180)+h/10))>1)
                 {

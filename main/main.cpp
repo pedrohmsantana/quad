@@ -189,7 +189,6 @@ int main(int argc, char *argv[])
         abs(atual[6]-anguloscor[6])>10||abs(atual[7]-anguloscor[7])>10||abs(atual[8]-anguloscor[8])>10||
         abs(atual[9]-anguloscor[9])>10||abs(atual[10]-anguloscor[10])>10||abs(atual[11]-anguloscor[11])>10);
 
-    cmd.write_torque(portHandler,packetHandler,2,0);
     cout<<"\nPosiçao inicial\n";
     cout<<"aperte qualquer tecla para continuar\n";
     cmd.getch();
@@ -214,7 +213,6 @@ int main(int argc, char *argv[])
                 return 0;
             }
         }
-        cmd.write_torque(portHandler,packetHandler,2,0);
 
         do
         {

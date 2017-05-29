@@ -284,7 +284,7 @@ int main(int argc, char *argv[])
         //cout<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
         arq3<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
         
-        if (abs(roll[contador]-lido[0]*0.29)>5)
+        if (abs(roll[contador]-lido[0]*0.29)>10)
         {
             h=11*tan((roll[contador]-lido[0]*0.29)*PI/180);
             if ((cos(lido[1]*0.29*PI/180)+h/10)>1||(cos(lido[1]*0.29*PI/180)+h/10)<-1||
@@ -307,7 +307,7 @@ int main(int argc, char *argv[])
             }   
             /* code */
         }
-        if (abs(pitch[contador])>5)
+        if (abs(pitch[contador])>10)
         {
             h=13.5*tan((pitch[contador])*PI/180);
             if ((cos(lido[1]*0.29*PI/180)+h/10)>1||(cos(lido[1]*0.29*PI/180)+h/10)<-1||

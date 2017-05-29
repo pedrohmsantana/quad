@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     int X;
     int contador=0;
     int n_written = 0;
-    int n = 0, n_endl, spot = 0, emer[2]={0,0};
+    int n = 0, n_endl, spot = 0;
     int USB = open( "/dev/ttyACM0", O_RDWR| O_NOCTTY );
     close(USB);
     USB = open( "/dev/ttyACM0", O_RDWR| O_NOCTTY );
@@ -281,7 +281,7 @@ int main(int argc, char *argv[])
         S4.push_back(temp_val[6]/5);
         roll.push_back(atan(-xAccel[contador]/zAccel[contador])*180/PI);
         pitch.push_back(3+atan(yAccel[contador]/(sqrt(xAccel[contador]*xAccel[contador]+zAccel[contador]*zAccel[contador])))*180/PI);
-        cout<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
+        //cout<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
         arq3<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
         
         if (abs(roll[contador])>2)
@@ -293,7 +293,7 @@ int main(int argc, char *argv[])
                 (abs(cos(lido[10]*0.29*PI/180)+h/10))>1)
             {
                 memset(cor_fat, 0, sizeof cor_fat);
-                cout<<"EMERGENCIA roll\n";
+                //cout<<"EMERGENCIA roll\n";
                 if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
                     (abs(cos(lido[10]*0.29*PI/180)+h/10))>1)
                 {
@@ -304,7 +304,6 @@ int main(int argc, char *argv[])
                 }
             }
             else{
-                emer[0]=0;
                 cor_fat[1]=cor_fat[1]+lido[1]/abs(lido[1])*(acos(cos(lido[1]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[1]));
                 cor_fat[2]=-cor_fat[1];
                 cor_fat[4]=cor_fat[4]+lido[4]/abs(lido[4])*(acos(cos(lido[4]*0.29*PI/180)-h/10)*180/(PI*0.29)-abs(lido[4]));
@@ -313,8 +312,7 @@ int main(int argc, char *argv[])
                 cor_fat[8]=-cor_fat[7];
                 cor_fat[10]=cor_fat[10]+lido[10]/abs(lido[10])*(acos(cos(lido[10]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[10]));
                 cor_fat[11]=-cor_fat[10];
-            }   
-            /* code */
+            }
         }
         if (abs(pitch[contador])>2)
         {
@@ -325,7 +323,7 @@ int main(int argc, char *argv[])
                 (abs(cos(lido[10]*0.29*PI/180)-h/10))>1)
             {
                 memset(cor_fat, 0, sizeof cor_fat);
-                cout<<"EMERGENCIA pitch\n";
+                //cout<<"EMERGENCIA pitch\n";
                 if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
                     (abs(cos(lido[4]*0.29*PI/180)+h/10))>1)
                 {
@@ -336,7 +334,6 @@ int main(int argc, char *argv[])
                 }
             }
             else{
-                emer[1]=0;
                 cor_fat[1]=cor_fat[1]+lido[1]/abs(lido[1])*(acos(cos(lido[1]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[1]));
                 cor_fat[2]=-cor_fat[1];
                 cor_fat[4]=cor_fat[4]+lido[4]/abs(lido[4])*(acos(cos(lido[4]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[4]));
@@ -346,7 +343,46 @@ int main(int argc, char *argv[])
                 cor_fat[10]=cor_fat[10]+lido[10]/abs(lido[10])*(acos(cos(lido[10]*0.29*PI/180)-h/10)*180/(PI*0.29)-abs(lido[10]));
                 cor_fat[11]=-cor_fat[10];
             }
-            /* code */
+        }
+        if(emer[0]==0 && emer[1]==1){
+            cout<<"Queda pra frente\n";
+            emer[0]=0;
+            emer[1]=0;
+        }
+        else if(emer[0]==0 && emer[1]==-1){
+            cout<<"Queda pra tras\n";
+            emer[0]=0;
+            emer[1]=0;
+        }
+        else if(emer[0]==1 && emer[1]==0){
+            cout<<"Queda pra direita\n";
+            emer[0]=0;
+            emer[1]=0;
+        }
+        else if(emer[0]==1 && emer[1]==1){
+            cout<<"Queda na pata 1\n";
+            emer[0]=0;
+            emer[1]=0;
+        }
+        else if(emer[0]==1 && emer[1]==-1){
+            cout<<"Queda na pata 4\n";
+            emer[0]=0;
+            emer[1]=0;
+        }
+        else if(emer[0]==-1 && emer[1]==0){
+            cout<<"Queda pra esquerda\n";
+            emer[0]=0;
+            emer[1]=0;
+        }
+        else if(emer[0]==-1 && emer[1]==1){
+            cout<<"Queda na pata 2\n";
+            emer[0]=0;
+            emer[1]=0;
+        }
+        else if(emer[0]==-1 && emer[1]==-1){
+            cout<<"Queda na pata 3\n";
+            emer[0]=0;
+            emer[1]=0;
         }
         //cout<<"[ "<<cor_fat[0]<<" "<<cor_fat[1]<<" "<<cor_fat[2]<<" "<<cor_fat[3]<<" "<<cor_fat[4]<<" "<<cor_fat[5];
         //cout<<" "<<cor_fat[6]<<" "<<cor_fat[7]<<" "<<cor_fat[8]<<" "<<cor_fat[9]<<" "<<cor_fat[10]<<" "<<cor_fat[11]<<" ]\n";

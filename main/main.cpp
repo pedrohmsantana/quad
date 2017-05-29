@@ -284,9 +284,9 @@ int main(int argc, char *argv[])
         cout<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
         arq3<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
         
-        if (abs(roll[contador]-lido[0]*0.29)>7)
+        if (abs(roll[contador])>1)
         {
-            h=11*tan((roll[contador]-lido[0]*0.29)*PI/180);
+            h=11*tan((roll[contador])*PI/180);
             if ((cos(lido[1]*0.29*PI/180)+h/10)>1||(cos(lido[1]*0.29*PI/180)+h/10)<-1||
                 (cos(lido[4]*0.29*PI/180)-h/10)>1||(cos(lido[4]*0.29*PI/180)-h/10)<-1||
                 (cos(lido[7]*0.29*PI/180)-h/10)>1||(cos(lido[7]*0.29*PI/180)-h/10)<-1||
@@ -307,7 +307,7 @@ int main(int argc, char *argv[])
             }   
             /* code */
         }
-        if (abs(pitch[contador])>7)
+        if (abs(pitch[contador])>1)
         {
             h=13.5*tan((pitch[contador])*PI/180);
             if ((cos(lido[1]*0.29*PI/180)+h/10)>1||(cos(lido[1]*0.29*PI/180)+h/10)<-1||

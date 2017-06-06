@@ -4,6 +4,10 @@
 #include <errno.h>      // Error number definitions
 #include <termios.h>    // POSIX terminal control definitions
 
+#define Kp_roll 1
+#define Kd_roll 0
+#define Kp_pitch 1
+#define Kd_pitch 0
 #define BAUDRATE                        1000000				// Padrao p/este trabalho
 #define DEVICENAME                      "/dev/ttyUSB0"      // Usando o conversor USB
 #define dt			                    0.01
@@ -287,7 +291,7 @@ int main(int argc, char *argv[])
         //cout<<roll[contador]<<" "<<lido[0]*0.29<<" "<<abs(roll[contador]-lido[0]*0.29)<<endl;
         if (abs(roll[contador])>5)
         {
-            h=11*tan((roll[contador]*PI/180));
+            h=11*(Kp_roll*tan((roll[contador]*PI/180))+Kd_roll*tan(((roll[contador]-roll[contador-1])*PI/180)));
             if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
                 (abs(cos(lido[4]*0.29*PI/180)-h/10))>1||
                 (abs(cos(lido[7]*0.29*PI/180)-h/10))>1||
@@ -317,7 +321,7 @@ int main(int argc, char *argv[])
         }
         if (abs(pitch[contador])>5)
         {
-            h=13.5*tan((pitch[contador])*PI/180);
+            h=13.5*(Kp_pitch*tan((roll[contador]*PI/180))+Kd_pitch*tan(((roll[contador]-roll[contador-1])*PI/180)));
             if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
                 (abs(cos(lido[4]*0.29*PI/180)+h/10))>1||
                 (abs(cos(lido[7]*0.29*PI/180)-h/10))>1||

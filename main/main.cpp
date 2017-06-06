@@ -165,6 +165,8 @@ int main(int argc, char *argv[])
     for(j=1; j<13; j++)
     {
         anguloscor[j-1]=lido[j-1]+vetor_centro[j-1]+cor_fat[j-1];
+        if(anguloscor[j-1]>200)anguloscor[j-1]=200;
+        else if(anguloscor[j-1]<-200)anguloscor[j-1]=-200;
         param_goal_position[0] = DXL_LOBYTE(anguloscor[j-1]);
         param_goal_position[1] = DXL_HIBYTE(anguloscor[j-1]);
         dxl_addparam_result = groupSyncWrite.addParam(j, param_goal_position);

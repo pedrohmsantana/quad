@@ -287,7 +287,7 @@ int main(int argc, char *argv[])
         //cout<<roll[contador]<<" "<<lido[0]*0.29<<" "<<abs(roll[contador]-lido[0]*0.29)<<endl;
         if (abs(roll[contador])>5)
         {
-            h=11*tan((roll[contador]*PI/180);
+            h=11*tan((roll[contador]*PI/180));
             if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
                 (abs(cos(lido[4]*0.29*PI/180)-h/10))>1||
                 (abs(cos(lido[7]*0.29*PI/180)-h/10))>1||

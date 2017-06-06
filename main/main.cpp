@@ -285,7 +285,7 @@ int main(int argc, char *argv[])
         arq3<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
         
         cout<<roll[contador]<<" "<<lido[0]*0.29<<" "<<abs(roll[contador]-lido[0]*0.29)<<endl;
-        if (abs(roll[contador]-lido[0]*0.29)>2)
+        if (abs(roll[contador]-lido[0]*0.29)>5)
         {
             h=11*tan((roll[contador]*PI/180-lido[0]*0.29));
             if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||

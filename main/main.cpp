@@ -293,7 +293,7 @@ int main(int argc, char *argv[])
         arq3<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
         
         //cout<<roll[contador]<<" "<<lido[0]*0.29<<" "<<abs(roll[contador]-lido[0]*0.29)<<endl;
-        if (abs(roll[contador])>5)
+        if (abs(roll[contador])>2)
         {
             h=11*(Kp_roll*tan((roll[contador]*PI/180))+Kd_roll*tan(((roll[contador]-roll[contador-1])*PI/180)));
             if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
@@ -323,7 +323,7 @@ int main(int argc, char *argv[])
                 cor_fat[11]=-cor_fat[10];
             }
         }
-        if (abs(pitch[contador])>5)
+        if (abs(pitch[contador])>2)
         {
             h=13.5*(Kp_pitch*tan((roll[contador]*PI/180))+Kd_pitch*tan(((roll[contador]-roll[contador-1])*PI/180)));
             if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||

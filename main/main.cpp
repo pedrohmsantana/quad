@@ -210,7 +210,7 @@ int main(int argc, char *argv[])
         {
             anguloscor[j-1]=lido[j-1]+vetor_centro[j-1]+cor_fat[j-1];
             if(lido[j-1]+cor_fat[j-1]>280)anguloscor[j-1]=vetor_centro[j-1]+280;
-        else if(lido[j-1]+cor_fat[j-1]<-280)anguloscor[j-1]=vetor_centro[j-1]-280;
+            else if(lido[j-1]+cor_fat[j-1]<-280)anguloscor[j-1]=vetor_centro[j-1]-280;
             cmd.write_torque(portHandler,packetHandler,j,1);
             param_goal_position[0] = DXL_LOBYTE(anguloscor[j-1]);
             param_goal_position[1] = DXL_HIBYTE(anguloscor[j-1]);
@@ -395,8 +395,7 @@ int main(int argc, char *argv[])
         }
         cout<<"[ "<<cor_fat[0]<<" "<<cor_fat[1]<<" "<<cor_fat[2]<<" "<<cor_fat[3]<<" "<<cor_fat[4]<<" "<<cor_fat[5];
         cout<<" "<<cor_fat[6]<<" "<<cor_fat[7]<<" "<<cor_fat[8]<<" "<<cor_fat[9]<<" "<<cor_fat[10]<<" "<<cor_fat[11]<<" ]\n";
-
-
+        memset(cor_fat, 0, sizeof cor_fat);
         contador++;
     }
     arq.close();

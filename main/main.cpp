@@ -243,50 +243,47 @@ int main(int argc, char *argv[])
             abs(atual[9]-anguloscor[9])>10||abs(atual[10]-anguloscor[10])>10||abs(atual[11]-anguloscor[11])>10);
 
         memset(temp_val, 0, sizeof temp_val);
-        for(j=0;j<2;j++){
-            n=0;
-            spot=0;
-            buf='\0';
-            n_endl=0;
-            memset(response, '\0', sizeof response);
+        n=0;
+        spot=0;
+        buf='\0';
+        n_endl=0;
+        memset(response, '\0', sizeof response);
 
-            n_written = write( USB, "1", 1 );
+        n_written = write( USB, "1", 1 );
 
-            do
-            {
-                n = read( USB, &buf, 1 );
-            }
-            while( buf != '<' && n > 0);
-            do
-            {
-                n = read( USB, &buf, 1 );
-                sprintf(&response[spot],"%c",buf);
-                spot += n;
-            }
-            while( buf != '>' && n > 0);
-            temp=response;
-            inic=temp.find('\n');
-            fim=inic;
-            while(fim!=string::npos)
-            {
-                fim=temp.find('\n',inic+1);
-                temp2=temp.substr(inic+1,fim-inic-1);
-                inic=fim;
-                if(n_endl<7)
-                {
-                    temp_val[n_endl]+=atof(temp2.c_str());
-                }
-                n_endl++;
-            }
-
+        do
+        {
+            n = read( USB, &buf, 1 );
         }
-        xAccel.push_back(temp_val[1]/2);
-        yAccel.push_back(-temp_val[0]/2);
-        zAccel.push_back(temp_val[2]/2);
-        S1.push_back(temp_val[3]/2);
-        S2.push_back(temp_val[4]/2);
-        S3.push_back(temp_val[5]/2);
-        S4.push_back(temp_val[6]/2);
+        while( buf != '<' && n > 0);
+        do
+        {
+            n = read( USB, &buf, 1 );
+            sprintf(&response[spot],"%c",buf);
+            spot += n;
+        }
+        while( buf != '>' && n > 0);
+        temp=response;
+        inic=temp.find('\n');
+        fim=inic;
+        while(fim!=string::npos)
+        {
+            fim=temp.find('\n',inic+1);
+            temp2=temp.substr(inic+1,fim-inic-1);
+            inic=fim;
+            if(n_endl<7)
+            {
+                temp_val[n_endl]+=atof(temp2.c_str());
+            }
+            n_endl++;
+        }
+        xAccel.push_back(temp_val[1]);
+        yAccel.push_back(-temp_val[0]);
+        zAccel.push_back(temp_val[2]);
+        S1.push_back(temp_val[3]);
+        S2.push_back(temp_val[4]);
+        S3.push_back(temp_val[5]);
+        S4.push_back(temp_val[6]);
         roll.push_back(atan(-xAccel[contador]/zAccel[contador])*180/PI);
         pitch.push_back(3+atan(yAccel[contador]/(sqrt(xAccel[contador]*xAccel[contador]+zAccel[contador]*zAccel[contador])))*180/PI);
         //cout<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;

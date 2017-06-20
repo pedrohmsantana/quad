@@ -401,6 +401,7 @@ int main(int argc, char *argv[])
     }
     arq.close();
     arq3.close();
+    getchar();
     cmd.write_torque(portHandler, packetHandler, BROADCASTID, (uint8_t) 0);
     // Close port
     portHandler->closePort();

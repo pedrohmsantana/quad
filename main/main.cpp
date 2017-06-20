@@ -243,7 +243,7 @@ int main(int argc, char *argv[])
             abs(atual[9]-anguloscor[9])>10||abs(atual[10]-anguloscor[10])>10||abs(atual[11]-anguloscor[11])>10);
 
         memset(temp_val, 0, sizeof temp_val);
-        for(j=0;j<5;j++){
+        for(j=0;j<2;j++){
             n=0;
             spot=0;
             buf='\0';
@@ -280,19 +280,20 @@ int main(int argc, char *argv[])
             }
 
         }
-        xAccel.push_back(temp_val[1]/5);
-        yAccel.push_back(-temp_val[0]/5);
-        zAccel.push_back(temp_val[2]/5);
-        S1.push_back(temp_val[3]/5);
-        S2.push_back(temp_val[4]/5);
-        S3.push_back(temp_val[5]/5);
-        S4.push_back(temp_val[6]/5);
+        xAccel.push_back(temp_val[1]/2);
+        yAccel.push_back(-temp_val[0]/2);
+        zAccel.push_back(temp_val[2]/2);
+        S1.push_back(temp_val[3]/2);
+        S2.push_back(temp_val[4]/2);
+        S3.push_back(temp_val[5]/2);
+        S4.push_back(temp_val[6]/2);
         roll.push_back(atan(-xAccel[contador]/zAccel[contador])*180/PI);
         pitch.push_back(3+atan(yAccel[contador]/(sqrt(xAccel[contador]*xAccel[contador]+zAccel[contador]*zAccel[contador])))*180/PI);
         //cout<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
         arq3<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
         
         //cout<<roll[contador]<<" "<<lido[0]*0.29<<" "<<abs(roll[contador]-lido[0]*0.29)<<endl;
+        /*
         if (abs(roll[contador])>2)
         {
             h=11*(Kp_roll*tan((roll[contador]*PI/180))+Kd_roll*tan(((roll[contador]-roll[contador-1])*PI/180)));
@@ -395,7 +396,7 @@ int main(int argc, char *argv[])
         }
         cout<<"[ "<<cor_fat[0]<<" "<<cor_fat[1]<<" "<<cor_fat[2]<<" "<<cor_fat[3]<<" "<<cor_fat[4]<<" "<<cor_fat[5];
         cout<<" "<<cor_fat[6]<<" "<<cor_fat[7]<<" "<<cor_fat[8]<<" "<<cor_fat[9]<<" "<<cor_fat[10]<<" "<<cor_fat[11]<<" ]\n";
-        memset(cor_fat, 0, sizeof cor_fat);
+        memset(cor_fat, 0, sizeof cor_fat);*/
         contador++;
     }
     arq.close();

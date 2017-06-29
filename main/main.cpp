@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     string marcha="marcha";
     marcha+=argv[1];
     marcha+=".txt";
-    ifstream arq(const char*(marcha));
+    ifstream arq(marcha.c_str());
     fstream arq2("calibra.txt");
     ofstream arq3("valores_sensores.txt");
 

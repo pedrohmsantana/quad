@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     string marcha="marcha";
     marcha+=argv[1];
     marcha+=".txt";
-    ifstream arq(marcha);
+    ifstream arq(const char*(marcha));
     fstream arq2("calibra.txt");
     ofstream arq3("valores_sensores.txt");
 
@@ -291,7 +291,7 @@ int main(int argc, char *argv[])
             pitch.push_back(3+atan(yAccel[contador]/(sqrt(xAccel[contador]*xAccel[contador]+zAccel[contador]*zAccel[contador])))*180/PI);
         //cout<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
             arq3<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
-            
+
         //cout<<roll[contador]<<" "<<lido[0]*0.29<<" "<<abs(roll[contador]-lido[0]*0.29)<<endl;
             if(atoi(argv[1])==4){
                 if (abs(roll[contador])>2)

@@ -281,6 +281,7 @@ int main(int argc, char *argv[])
                 }
                 n_endl++;
             }
+            tcflush( USB, TCIFLUSH );
             xAccel.push_back(temp_val[1]);
             yAccel.push_back(-temp_val[0]);
             zAccel.push_back(temp_val[2]);

@@ -23,8 +23,10 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     command cmd;
-
-    ifstream arq("angmaior.txt");
+    string marcha="marcha";
+    marcha+=argv[1];
+    marcha+=".txt";
+    ifstream arq(marcha);
     fstream arq2("calibra.txt");
     ofstream arq3("valores_sensores.txt");
 
@@ -243,158 +245,160 @@ int main(int argc, char *argv[])
             abs(atual[9]-anguloscor[9])>10||abs(atual[10]-anguloscor[10])>10||abs(atual[11]-anguloscor[11])>10);
 
         memset(temp_val, 0, sizeof temp_val);
-        n=0;
-        spot=0;
-        buf='\0';
-        n_endl=0;
-        memset(response, '\0', sizeof response);
+        if(contador%10==0||atoi(argv[1])==4){
+            n=0;
+            spot=0;
+            buf='\0';
+            n_endl=0;
+            memset(response, '\0', sizeof response);
 
-        n_written = write( USB, "1", 1 );
+            n_written = write( USB, "1", 1 );
 
-        do
-        {
-            n = read( USB, &buf, 1 );
-        }
-        while( buf != '<' && n > 0);
-        do
-        {
-            n = read( USB, &buf, 1 );
-            sprintf(&response[spot],"%c",buf);
-            spot += n;
-        }
-        while( buf != '>' && n > 0);
-        temp=response;
-        inic=temp.find('\n');
-        fim=inic;
-        while(fim!=string::npos)
-        {
-            fim=temp.find('\n',inic+1);
-            temp2=temp.substr(inic+1,fim-inic-1);
-            inic=fim;
-            if(n_endl<7)
+            do
             {
-                temp_val[n_endl]+=atof(temp2.c_str());
+                n = read( USB, &buf, 1 );
             }
-            n_endl++;
-        }
-        xAccel.push_back(temp_val[1]);
-        yAccel.push_back(-temp_val[0]);
-        zAccel.push_back(temp_val[2]);
-        S1.push_back(temp_val[3]);
-        S2.push_back(temp_val[4]);
-        S3.push_back(temp_val[5]);
-        S4.push_back(temp_val[6]);
-        roll.push_back(atan(-xAccel[contador]/zAccel[contador])*180/PI);
-        pitch.push_back(3+atan(yAccel[contador]/(sqrt(xAccel[contador]*xAccel[contador]+zAccel[contador]*zAccel[contador])))*180/PI);
+            while( buf != '<' && n > 0);
+            do
+            {
+                n = read( USB, &buf, 1 );
+                sprintf(&response[spot],"%c",buf);
+                spot += n;
+            }
+            while( buf != '>' && n > 0);
+            temp=response;
+            inic=temp.find('\n');
+            fim=inic;
+            while(fim!=string::npos)
+            {
+                fim=temp.find('\n',inic+1);
+                temp2=temp.substr(inic+1,fim-inic-1);
+                inic=fim;
+                if(n_endl<7)
+                {
+                    temp_val[n_endl]+=atof(temp2.c_str());
+                }
+                n_endl++;
+            }
+            xAccel.push_back(temp_val[1]);
+            yAccel.push_back(-temp_val[0]);
+            zAccel.push_back(temp_val[2]);
+            S1.push_back(temp_val[3]);
+            S2.push_back(temp_val[4]);
+            S3.push_back(temp_val[5]);
+            S4.push_back(temp_val[6]);
+            roll.push_back(atan(-xAccel[contador]/zAccel[contador])*180/PI);
+            pitch.push_back(3+atan(yAccel[contador]/(sqrt(xAccel[contador]*xAccel[contador]+zAccel[contador]*zAccel[contador])))*180/PI);
         //cout<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
-        arq3<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
-        
+            arq3<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
+            
         //cout<<roll[contador]<<" "<<lido[0]*0.29<<" "<<abs(roll[contador]-lido[0]*0.29)<<endl;
-        /*
-        if (abs(roll[contador])>2)
-        {
-            h=11*(Kp_roll*tan((roll[contador]*PI/180))+Kd_roll*tan(((roll[contador]-roll[contador-1])*PI/180)));
-            if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
-                (abs(cos(lido[4]*0.29*PI/180)-h/10))>1||
-                (abs(cos(lido[7]*0.29*PI/180)-h/10))>1||
-                (abs(cos(lido[10]*0.29*PI/180)+h/10))>1)
-            {
-                memset(cor_fat, 0, sizeof cor_fat);
+            if(atoi(argv[1])==4){
+                if (abs(roll[contador])>2)
+                {
+                    h=11*(Kp_roll*tan((roll[contador]*PI/180))+Kd_roll*tan(((roll[contador]-roll[contador-1])*PI/180)));
+                    if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
+                        (abs(cos(lido[4]*0.29*PI/180)-h/10))>1||
+                        (abs(cos(lido[7]*0.29*PI/180)-h/10))>1||
+                        (abs(cos(lido[10]*0.29*PI/180)+h/10))>1)
+                    {
+                        memset(cor_fat, 0, sizeof cor_fat);
                 //cout<<"EMERGENCIA roll\n";
-                if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
-                    (abs(cos(lido[10]*0.29*PI/180)+h/10))>1)
+                        if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
+                            (abs(cos(lido[10]*0.29*PI/180)+h/10))>1)
+                        {
+                            emer[0]=1;
+                        }
+                        else{
+                            emer[0]=-1;
+                        }
+                    }
+                    else{
+                        cor_fat[1]=cor_fat[1]+lido[1]/abs(lido[1])*(acos(cos(lido[1]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[1]));
+                        cor_fat[2]=-cor_fat[1];
+                        cor_fat[4]=cor_fat[4]+lido[4]/abs(lido[4])*(acos(cos(lido[4]*0.29*PI/180)-h/10)*180/(PI*0.29)-abs(lido[4]));
+                        cor_fat[5]=-cor_fat[4];
+                        cor_fat[7]=cor_fat[7]+lido[7]/abs(lido[7])*(acos(cos(lido[7]*0.29*PI/180)-h/10)*180/(PI*0.29)-abs(lido[7]));
+                        cor_fat[8]=-cor_fat[7];
+                        cor_fat[10]=cor_fat[10]+lido[10]/abs(lido[10])*(acos(cos(lido[10]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[10]));
+                        cor_fat[11]=-cor_fat[10];
+                    }
+                }
+                if (abs(pitch[contador])>2)
                 {
-                    emer[0]=1;
-                }
-                else{
-                    emer[0]=-1;
-                }
-            }
-            else{
-                cor_fat[1]=cor_fat[1]+lido[1]/abs(lido[1])*(acos(cos(lido[1]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[1]));
-                cor_fat[2]=-cor_fat[1];
-                cor_fat[4]=cor_fat[4]+lido[4]/abs(lido[4])*(acos(cos(lido[4]*0.29*PI/180)-h/10)*180/(PI*0.29)-abs(lido[4]));
-                cor_fat[5]=-cor_fat[4];
-                cor_fat[7]=cor_fat[7]+lido[7]/abs(lido[7])*(acos(cos(lido[7]*0.29*PI/180)-h/10)*180/(PI*0.29)-abs(lido[7]));
-                cor_fat[8]=-cor_fat[7];
-                cor_fat[10]=cor_fat[10]+lido[10]/abs(lido[10])*(acos(cos(lido[10]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[10]));
-                cor_fat[11]=-cor_fat[10];
-            }
-        }
-        if (abs(pitch[contador])>2)
-        {
-            h=13.5*(Kp_pitch*tan((roll[contador]*PI/180))+Kd_pitch*tan(((roll[contador]-roll[contador-1])*PI/180)));
-            if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
-                (abs(cos(lido[4]*0.29*PI/180)+h/10))>1||
-                (abs(cos(lido[7]*0.29*PI/180)-h/10))>1||
-                (abs(cos(lido[10]*0.29*PI/180)-h/10))>1)
-            {
-                memset(cor_fat, 0, sizeof cor_fat);
+                    h=13.5*(Kp_pitch*tan((roll[contador]*PI/180))+Kd_pitch*tan(((roll[contador]-roll[contador-1])*PI/180)));
+                    if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
+                        (abs(cos(lido[4]*0.29*PI/180)+h/10))>1||
+                        (abs(cos(lido[7]*0.29*PI/180)-h/10))>1||
+                        (abs(cos(lido[10]*0.29*PI/180)-h/10))>1)
+                    {
+                        memset(cor_fat, 0, sizeof cor_fat);
                 //cout<<"EMERGENCIA pitch\n";
-                if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
-                    (abs(cos(lido[4]*0.29*PI/180)+h/10))>1)
-                {
-                    emer[1]=1;
+                        if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
+                            (abs(cos(lido[4]*0.29*PI/180)+h/10))>1)
+                        {
+                            emer[1]=1;
+                        }
+                        else{
+                            emer[1]=-1;
+                        }
+                    }
+                    else{
+                        cor_fat[1]=cor_fat[1]+lido[1]/abs(lido[1])*(acos(cos(lido[1]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[1]));
+                        cor_fat[2]=-cor_fat[1];
+                        cor_fat[4]=cor_fat[4]+lido[4]/abs(lido[4])*(acos(cos(lido[4]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[4]));
+                        cor_fat[5]=-cor_fat[4];
+                        cor_fat[7]=cor_fat[7]+lido[7]/abs(lido[7])*(acos(cos(lido[7]*0.29*PI/180)-h/10)*180/(PI*0.29)-abs(lido[7]));
+                        cor_fat[8]=-cor_fat[7];
+                        cor_fat[10]=cor_fat[10]+lido[10]/abs(lido[10])*(acos(cos(lido[10]*0.29*PI/180)-h/10)*180/(PI*0.29)-abs(lido[10]));
+                        cor_fat[11]=-cor_fat[10];
+                    }
                 }
-                else{
-                    emer[1]=-1;
+                if(emer[0]==0 && emer[1]==1){
+                    cout<<"Queda pra frente\n";
+                    emer[0]=0;
+                    emer[1]=0;
                 }
+                else if(emer[0]==0 && emer[1]==-1){
+                    cout<<"Queda pra tras\n";
+                    emer[0]=0;
+                    emer[1]=0;
+                }
+                else if(emer[0]==1 && emer[1]==0){
+                    cout<<"Queda pra direita\n";
+                    emer[0]=0;
+                    emer[1]=0;
+                }
+                else if(emer[0]==1 && emer[1]==1){
+                    cout<<"Queda na pata 1\n";
+                    emer[0]=0;
+                    emer[1]=0;
+                }
+                else if(emer[0]==1 && emer[1]==-1){
+                    cout<<"Queda na pata 4\n";
+                    emer[0]=0;
+                    emer[1]=0;
+                }
+                else if(emer[0]==-1 && emer[1]==0){
+                    cout<<"Queda pra esquerda\n";
+                    emer[0]=0;
+                    emer[1]=0;
+                }
+                else if(emer[0]==-1 && emer[1]==1){
+                    cout<<"Queda na pata 2\n";
+                    emer[0]=0;
+                    emer[1]=0;
+                }
+                else if(emer[0]==-1 && emer[1]==-1){
+                    cout<<"Queda na pata 3\n";
+                    emer[0]=0;
+                    emer[1]=0;
+                }
+                cout<<"[ "<<cor_fat[0]<<" "<<cor_fat[1]<<" "<<cor_fat[2]<<" "<<cor_fat[3]<<" "<<cor_fat[4]<<" "<<cor_fat[5];
+                cout<<" "<<cor_fat[6]<<" "<<cor_fat[7]<<" "<<cor_fat[8]<<" "<<cor_fat[9]<<" "<<cor_fat[10]<<" "<<cor_fat[11]<<" ]\n";
             }
-            else{
-                cor_fat[1]=cor_fat[1]+lido[1]/abs(lido[1])*(acos(cos(lido[1]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[1]));
-                cor_fat[2]=-cor_fat[1];
-                cor_fat[4]=cor_fat[4]+lido[4]/abs(lido[4])*(acos(cos(lido[4]*0.29*PI/180)+h/10)*180/(PI*0.29)-abs(lido[4]));
-                cor_fat[5]=-cor_fat[4];
-                cor_fat[7]=cor_fat[7]+lido[7]/abs(lido[7])*(acos(cos(lido[7]*0.29*PI/180)-h/10)*180/(PI*0.29)-abs(lido[7]));
-                cor_fat[8]=-cor_fat[7];
-                cor_fat[10]=cor_fat[10]+lido[10]/abs(lido[10])*(acos(cos(lido[10]*0.29*PI/180)-h/10)*180/(PI*0.29)-abs(lido[10]));
-                cor_fat[11]=-cor_fat[10];
-            }
+            contador++;
         }
-        if(emer[0]==0 && emer[1]==1){
-            cout<<"Queda pra frente\n";
-            emer[0]=0;
-            emer[1]=0;
-        }
-        else if(emer[0]==0 && emer[1]==-1){
-            cout<<"Queda pra tras\n";
-            emer[0]=0;
-            emer[1]=0;
-        }
-        else if(emer[0]==1 && emer[1]==0){
-            cout<<"Queda pra direita\n";
-            emer[0]=0;
-            emer[1]=0;
-        }
-        else if(emer[0]==1 && emer[1]==1){
-            cout<<"Queda na pata 1\n";
-            emer[0]=0;
-            emer[1]=0;
-        }
-        else if(emer[0]==1 && emer[1]==-1){
-            cout<<"Queda na pata 4\n";
-            emer[0]=0;
-            emer[1]=0;
-        }
-        else if(emer[0]==-1 && emer[1]==0){
-            cout<<"Queda pra esquerda\n";
-            emer[0]=0;
-            emer[1]=0;
-        }
-        else if(emer[0]==-1 && emer[1]==1){
-            cout<<"Queda na pata 2\n";
-            emer[0]=0;
-            emer[1]=0;
-        }
-        else if(emer[0]==-1 && emer[1]==-1){
-            cout<<"Queda na pata 3\n";
-            emer[0]=0;
-            emer[1]=0;
-        }
-        cout<<"[ "<<cor_fat[0]<<" "<<cor_fat[1]<<" "<<cor_fat[2]<<" "<<cor_fat[3]<<" "<<cor_fat[4]<<" "<<cor_fat[5];
-        cout<<" "<<cor_fat[6]<<" "<<cor_fat[7]<<" "<<cor_fat[8]<<" "<<cor_fat[9]<<" "<<cor_fat[10]<<" "<<cor_fat[11]<<" ]\n";
-        memset(cor_fat, 0, sizeof cor_fat);*/
-        contador++;
     }
     arq.close();
     arq3.close();

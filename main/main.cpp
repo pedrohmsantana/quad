@@ -245,7 +245,7 @@ int main(int argc, char *argv[])
             abs(atual[9]-anguloscor[9])>10||abs(atual[10]-anguloscor[10])>10||abs(atual[11]-anguloscor[11])>10);
 
         memset(temp_val, 0, sizeof temp_val);
-        if(contador%10==0||atoi(argv[1])==4){
+        if(contador%10==0){
             n=0;
             spot=0;
             buf='\0';
@@ -287,16 +287,16 @@ int main(int argc, char *argv[])
             S2.push_back(temp_val[4]);
             S3.push_back(temp_val[5]);
             S4.push_back(temp_val[6]);
-            roll.push_back(atan(-xAccel[contador]/zAccel[contador])*180/PI);
-            pitch.push_back(3+atan(yAccel[contador]/(sqrt(xAccel[contador]*xAccel[contador]+zAccel[contador]*zAccel[contador])))*180/PI);
-        //cout<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
-            arq3<<xAccel[contador]<<" "<<yAccel[contador]<<" "<<zAccel[contador]<<" "<<S1[contador]<<" "<<S2[contador]<<" "<<S3[contador]<<" "<<S4[contador]<<" "<<roll[contador]<<" "<<pitch[contador]<<endl;
+            roll.push_back(atan(-xAccel[contador%10]/zAccel[contador%10])*180/PI);
+            pitch.push_back(3+atan(yAccel[contador%10]/(sqrt(xAccel[contador%10]*xAccel[contador%10]+zAccel[contador%10]*zAccel[contador%10])))*180/PI);
+        //cout<<xAccel[contador%10]<<" "<<yAccel[contador%10]<<" "<<zAccel[contador%10]<<" "<<S1[contador%10]<<" "<<S2[contador%10]<<" "<<S3[contador%10]<<" "<<S4[contador%10]<<" "<<roll[contador%10]<<" "<<pitch[contador%10]<<endl;
+            arq3<<xAccel[contador%10]<<" "<<yAccel[contador%10]<<" "<<zAccel[contador%10]<<" "<<S1[contador%10]<<" "<<S2[contador%10]<<" "<<S3[contador%10]<<" "<<S4[contador%10]<<" "<<roll[contador%10]<<" "<<pitch[contador%10]<<endl;
 
-        //cout<<roll[contador]<<" "<<lido[0]*0.29<<" "<<abs(roll[contador]-lido[0]*0.29)<<endl;
+        //cout<<roll[contador%10]<<" "<<lido[0]*0.29<<" "<<abs(roll[contador%10]-lido[0]*0.29)<<endl;
             if(atoi(argv[1])==4){
-                if (abs(roll[contador])>2)
+                if (abs(roll[contador%10])>2)
                 {
-                    h=11*(Kp_roll*tan((roll[contador]*PI/180))+Kd_roll*tan(((roll[contador]-roll[contador-1])*PI/180)));
+                    h=11*(Kp_roll*tan((roll[contador%10]*PI/180))+Kd_roll*tan(((roll[contador%10]-roll[contador%10-1])*PI/180)));
                     if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
                         (abs(cos(lido[4]*0.29*PI/180)-h/10))>1||
                         (abs(cos(lido[7]*0.29*PI/180)-h/10))>1||
@@ -324,9 +324,9 @@ int main(int argc, char *argv[])
                         cor_fat[11]=-cor_fat[10];
                     }
                 }
-                if (abs(pitch[contador])>2)
+                if (abs(pitch[contador%10])>2)
                 {
-                    h=13.5*(Kp_pitch*tan((roll[contador]*PI/180))+Kd_pitch*tan(((roll[contador]-roll[contador-1])*PI/180)));
+                    h=13.5*(Kp_pitch*tan((roll[contador%10]*PI/180))+Kd_pitch*tan(((roll[contador%10]-roll[contador%10-1])*PI/180)));
                     if ((abs(cos(lido[1]*0.29*PI/180)+h/10))>1||
                         (abs(cos(lido[4]*0.29*PI/180)+h/10))>1||
                         (abs(cos(lido[7]*0.29*PI/180)-h/10))>1||

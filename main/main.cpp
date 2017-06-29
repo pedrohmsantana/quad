@@ -244,8 +244,9 @@ int main(int argc, char *argv[])
             abs(atual[6]-anguloscor[6])>10||abs(atual[7]-anguloscor[7])>10||abs(atual[8]-anguloscor[8])>10||
             abs(atual[9]-anguloscor[9])>10||abs(atual[10]-anguloscor[10])>10||abs(atual[11]-anguloscor[11])>10);
 
-        memset(temp_val, 0, sizeof temp_val);
+        
         if(contador%10==0){
+            memset(temp_val, 0, sizeof temp_val);
             n=0;
             spot=0;
             buf='\0';

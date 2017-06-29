@@ -88,8 +88,8 @@ int main(int argc, char *argv[])
     /* Save old tty parameters */
     tty_old = tty;
     /* Set Baud Rate */
-    cfsetospeed (&tty, (speed_t)B1000000);
-    cfsetispeed (&tty, (speed_t)B1000000);
+    cfsetospeed (&tty, (speed_t)B115200);
+    cfsetispeed (&tty, (speed_t)B115200);
     /* Setting other Port Stuff */
     tty.c_cflag     &=  ~PARENB;            // Make 8n1
     tty.c_cflag     &=  ~CSTOPB;
